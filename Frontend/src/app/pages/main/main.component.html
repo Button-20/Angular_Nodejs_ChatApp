@@ -1,0 +1,187 @@
+<div class="d-flex vh-100 w-100">
+  <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark sidebar">
+    <a
+      href="/"
+      class="text-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+    >
+      <img
+        src="https://lever-client-logos.s3.us-west-2.amazonaws.com/7d49b5ad-fd99-4b15-8232-ed855c1f3e07-1652401742302.png"
+        width="200"
+        alt="Logo"
+      />
+    </a>
+    <hr />
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item" *ngFor="let user of socketService.users">
+        <a
+          href="javascript:void(0);"
+          (click)="setReceiver(user)"
+          class="nav-link active d-flex align-items-center justify-content-between"
+          aria-current="page"
+        >
+          <div class="d-flex align-items-center">
+            <img
+              [src]="user.picture"
+              alt=""
+              width="50"
+              height="50"
+              class="rounded-circle me-2"
+            />
+            <p class="m-0">{{ user.email }}</p>
+          </div>
+          <small>{{ user.status }}</small>
+        </a>
+      </li>
+    </ul>
+    <hr />
+    <div class="dropdown">
+      <a
+        href="#"
+        class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+        id="dropdownUser1"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+        *ngIf="auth.user$ | async as user"
+      >
+        <img
+          [src]="user.picture"
+          alt=""
+          width="32"
+          height="32"
+          class="rounded-circle me-2"
+        />
+        <strong>{{ user.email }}</strong>
+      </a>
+      <ul
+        class="dropdown-menu dropdown-menu-dark text-small shadow"
+        aria-labelledby="dropdownUser1"
+      >
+        <li>
+          <a
+            class="dropdown-item"
+            href="javascript:void(0);"
+            (click)="logoutWithAuth0()"
+            >Log out</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="d-flex flex-column flex-grow-1">
+    <ng-container *ngIf="socketService.receiverDetails !== undefined">
+      <div
+        class="bg-dark shadow d-flex justify-content-between align-items-center"
+      >
+        <div class="d-flex align-items-start p-3 header-left">
+          <img
+            [src]="socketService.receiverDetails.picture"
+            alt=""
+            width="30"
+            height="30"
+            class="rounded-circle me-2"
+          />
+          <div class="ps-2 text-white">
+            <h5 class="m-0">{{ socketService.receiverDetails.email }}</h5>
+            <small
+              >Joined
+              {{ socketService.receiverDetails.createdAt | dateAsAgo }}</small
+            >
+          </div>
+        </div>
+        <div class="p-2 header-right">
+          <button type="button" class="btn btn-danger" (click)="blockUser()">
+            Block
+          </button>
+        </div>
+      </div>
+      <div class="flex-grow-1 main-chat" id="main-chat-body">
+        <!-- <div class="overlay"></div> -->
+        <div class="d-flex flex-column p-3">
+          <div
+            class="d-flex flex-column messages"
+            *ngFor="let message of socketService.messages"
+          >
+            <div
+              class="d-flex align-items-start my-3 receiver-message"
+              *ngIf="message.sender._id !== socketService.currentUser?._id"
+            >
+              <img
+                [src]="message.sender.picture"
+                alt=""
+                width="32"
+                height="32"
+                class="rounded-circle me-2"
+              />
+              <div class="bubble-container mx-3">
+                <div class="bubble">
+                  <p class="m-0">{{ message.message }}</p>
+                  <div class="time">
+                    {{ message.createdAt | dateAsAgo }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="d-flex align-items-start my-3 sender-message justify-content-end"
+              *ngIf="message.sender._id === socketService.currentUser?._id"
+            >
+              <div class="bubble-container mx-3">
+                <div class="bubble">
+                  <p class="m-0">{{ message.message }}</p>
+                  <div class="time">
+                    {{ message.createdAt | dateAsAgo }}
+                  </div>
+                </div>
+              </div>
+              <img
+                [src]="message.sender.picture"
+                alt=""
+                width="32"
+                height="32"
+                class="rounded-circle me-2"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-info">
+        <div class="container">
+          <form
+            class="row bg-dark justify-content-end p-3"
+            [formGroup]="messageForm"
+            (ngSubmit)="sendMessage()"
+          >
+            <div class="col-sm-10 col-md-11">
+              <textarea
+                class="form-control"
+                name="message"
+                rows="2"
+                id="autoresizing"
+                formControlName="message"
+                placeholder="Type your message here..."
+                (keydown)="submitWithEnter($event)"
+              ></textarea>
+            </div>
+            <div class="col-sm-2 col-md-1 d-flex align-items-center">
+              <button type="submit" class="custom-btn btn">
+                <i class="bi bi-send-fill"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </ng-container>
+    <div
+      class="img_container h-100 d-flex justify-content-center align-items-center"
+      *ngIf="socketService.receiverDetails === undefined"
+    >
+      <div class="p-3 d-flex flex-column align-items-center">
+        <img src="assets/images/begin-chat.svg" alt="Chat Image" />
+        <p class="w-50 text-white text-center">
+          Select a chat to begin messaging with your friends and colleagues.
+          Send and receive messages in realtime.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

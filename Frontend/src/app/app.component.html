@@ -1,0 +1,6 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-ripple-multiple"
+  [fullScreen]="true">
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>
+<app-main *ngIf="auth.isAuthenticated$ | async"></app-main>
+<app-login *ngIf="(auth.isAuthenticated$ | async) === false"></app-login>
