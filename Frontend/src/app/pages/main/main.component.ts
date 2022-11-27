@@ -60,6 +60,8 @@ export class MainComponent implements OnInit {
     });
     this.socketService.receiverDetails = user;
     this.scrollToBottom();
+    this.moveSidebar();
+    this.addActiveToNavbar();
   }
 
   sendMessage() {
@@ -102,6 +104,25 @@ export class MainComponent implements OnInit {
     if (event.keyCode === 13 && !event.shiftKey) {
       event.preventDefault();
       this.sendMessage();
+    }
+  }
+
+  moveSidebar() {
+    const sidebar = document.querySelector('.sidebar') as HTMLElement;
+    if (sidebar && window.innerWidth < 768) {
+      sidebar.classList.toggle('move-sidebar');
+    }
+  }
+
+  addActiveToNavbar() { 
+    const navlink = document.querySelector('.nav-link') as HTMLElement;
+    if (navlink) {
+      // Remove active class from all navlinks
+      const navlinks = document.querySelectorAll('.nav-link');
+      navlinks.forEach((navlink) => {
+        navlink.classList.remove('active');
+      });
+      navlink.classList.add('active');
     }
   }
 }

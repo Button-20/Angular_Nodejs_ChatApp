@@ -10,7 +10,7 @@ export const environment = {
     // redirectUri: window.location.origin,
   },
   socket: {
-    url: 'http://localhost:5000',
+    url: 'http://localhost:5500',
   },
 };
 
