@@ -22,7 +22,7 @@ const server = app.listen(process.env.PORT, () =>
 // Socket.io connection event listener
 const io = socketIO(server, {
   cors: {
-    origin: "http://localhost:4200",
+    origin: process.env.CLIENT_URL,
     credentials: true,
   },
 });
