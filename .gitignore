@@ -1,0 +1,50 @@
+Backend/node_modules
+# Frontend
+Frontend/node_modules
+Frontend/dist
+Frontend/.firebaserc
+Frontend/firebase.json
+Frontend/package-lock.json
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+Frontend/.vscode/*
+Frontend/!.vscode/settings.json
+Frontend/!.vscode/tasks.json
+Frontend/!.vscode/launch.json
+Frontend/!.vscode/extensions.json
+Frontend/.history/*
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+
+# System files
+.DS_Store
+Thumbs.db
+
