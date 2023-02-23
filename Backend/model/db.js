@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 // Connect to the database
-mongoose.set('strictModifying', false);
+mongoose.set("strictQuery", true);
 mongoose.connect(
   process.env.MONGODB_URI,
   { useNewUrlParser: true, useUnifiedTopology: true },
@@ -15,4 +15,3 @@ mongoose.connect(
     }
   }
 );
-

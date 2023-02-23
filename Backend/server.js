@@ -1,4 +1,4 @@
-// require("./config/config");
+require("./config/config");
 require("./model/db");
 const cors = require("cors");
 const express = require("express");
@@ -15,7 +15,7 @@ const User = require("./model/user.model");
 const Message = require("./model/message.model");
 
 // Socket.io
-const server = app.listen(process.env.PORT || 3000, () =>
+const server = app.listen(process.env.PORT, () =>
   console.log(`Server started at port : ${process.env.PORT}`)
 );
 
